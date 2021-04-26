@@ -21,7 +21,8 @@ namespace Guestbook.Application
         {
             services.AddControllers();
 
-            var storage = RedisGuestbookStorage.Create("localhost:6379").Result;
+            var connectionString = Configuration.GetValue<string>("StorageConnectionString");
+            var storage = RedisGuestbookStorage.Create(connectionString).Result;
             services.AddSingleton<IGuestbookStorage>(storage);
         }
 
