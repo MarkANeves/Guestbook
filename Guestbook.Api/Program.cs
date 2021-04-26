@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Guestbook.Application
+namespace Guestbook.Api
 {
     public class Program
     {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Guestbook.Application.Models
+namespace Guestbook.Api.Models
 {
     public record GuestbookModel(IEnumerable<GuestbookEntry> Entries);
 }

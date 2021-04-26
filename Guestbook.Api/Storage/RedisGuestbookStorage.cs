@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Guestbook.Application.Models;
+using Guestbook.Api.Models;
 using StackExchange.Redis;
 
-namespace Guestbook.Application.Storage
+namespace Guestbook.Api.Storage
 {
     public class RedisGuestbookStorage : IGuestbookStorage
     {

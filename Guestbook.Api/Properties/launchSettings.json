@@ -17,7 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "Guestbook.App": {
+    "Guestbook.Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "guestbook",

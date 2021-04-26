@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Guestbook.Application.Models;
-using Guestbook.Application.Storage;
+using Guestbook.Api.Models;
+using Guestbook.Api.Storage;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Guestbook.Application.Controllers
+namespace Guestbook.Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]

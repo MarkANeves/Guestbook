@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Guestbook.Application.Models
+namespace Guestbook.Api.Models
 {
     public record GuestbookEntry(string Message, DateTime Timestamp);
 }

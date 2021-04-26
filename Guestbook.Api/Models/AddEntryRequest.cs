@@ -1,4 +1,4 @@
-﻿namespace Guestbook.Application.Models
+﻿namespace Guestbook.Api.Models
 {
     public record AddEntryRequest(string Message);
 }

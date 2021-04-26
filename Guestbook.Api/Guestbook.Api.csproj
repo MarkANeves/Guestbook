@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.Web">
+	<PropertyGroup>
+		<TargetFramework>net5.0</TargetFramework>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(RunConfiguration)' == 'Guestbook.Api' " />
+	<ItemGroup>
+		<Folder Include="Models\" />
+		<Folder Include="Storage\" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="StackExchange.Redis" Version="2.2.4" />
+	</ItemGroup>
+</Project>

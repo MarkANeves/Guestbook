@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Guestbook.Application.Models;
+using Guestbook.Api.Models;
 
-namespace Guestbook.Application.Storage
+namespace Guestbook.Api.Storage
 {
     public interface IGuestbookStorage
     {

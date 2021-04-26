@@ -1,11 +1,11 @@
-using Guestbook.Application.Storage;
+using Guestbook.Api.Storage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Guestbook.Application
+namespace Guestbook.Api
 {
     public class Startup
     {
