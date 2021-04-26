@@ -1,10 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Guestbook.Application.Models
+﻿namespace Guestbook.Application.Models
 {
-    public class AddEntryRequest
-    {
-        [JsonPropertyName("message")]
-        public string Message { get; init; }
-    }
+    public record AddEntryRequest(string Message);
 }

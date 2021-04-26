@@ -29,10 +29,7 @@ namespace Guestbook.Application.Storage
 
             var entries = entriesValues.Select(DeserializeEntry).ToArray();
 
-            return new GuestbookModel
-            {
-                Entries = entries
-            };
+            return new GuestbookModel(entries);
         }
 
         public Task AddEntry(GuestbookEntry entry)

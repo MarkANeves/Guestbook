@@ -2,8 +2,5 @@
 
 namespace Guestbook.Application.Models
 {
-    public class GuestbookModel
-    {
-        public IEnumerable<GuestbookEntry> Entries { get; init; }
-    }
+    public record GuestbookModel(IEnumerable<GuestbookEntry> Entries);
 }

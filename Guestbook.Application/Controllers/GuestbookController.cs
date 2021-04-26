@@ -45,11 +45,7 @@ namespace Guestbook.Application.Controllers
 
             _logger.LogInformation($"AddEntry: {request.Message}");
 
-            await _storage.AddEntry(new GuestbookEntry
-            {
-                Message = request.Message,
-                Timestamp = DateTime.UtcNow
-            });
+            await _storage.AddEntry(new GuestbookEntry(request.Message, DateTime.UtcNow));
 
             return Ok();
         }

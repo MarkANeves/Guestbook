@@ -2,10 +2,5 @@
 
 namespace Guestbook.Application.Models
 {
-    public class GuestbookEntry
-    {
-        public string Message { get; init; }
-
-        public DateTime Timestamp { get; init; }
-    }
+    public record GuestbookEntry(string Message, DateTime Timestamp);
 }
