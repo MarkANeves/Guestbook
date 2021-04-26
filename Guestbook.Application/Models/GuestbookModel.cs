@@ -4,11 +4,6 @@ namespace Guestbook.Application.Models
 {
     public class GuestbookModel
     {
-        public IEnumerable<GuestbookEntry> Entries { get; }
-
-        public GuestbookModel(IEnumerable<GuestbookEntry> entries)
-        {
-            Entries = entries;
-        }
+        public IEnumerable<GuestbookEntry> Entries { get; init; }
     }
 }

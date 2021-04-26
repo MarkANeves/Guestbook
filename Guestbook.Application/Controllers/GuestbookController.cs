@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Guestbook.Application.Models;
+using Guestbook.Application.Storage;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -9,30 +11,25 @@ namespace Guestbook.Application.Controllers
     [Route("[controller]")]
     public class GuestbookController : ControllerBase
     {
-        private static readonly GuestbookEntry[] GuestbookEntries = new[]
-        {
-            new GuestbookEntry("Hello, World", new DateTime(2021, 4, 1)),
-            new GuestbookEntry("Coffee", new DateTime(2021, 4, 2)),
-            new GuestbookEntry("Zebras", new DateTime(2021, 4, 3))
-        };
-
+        private readonly IGuestbookStorage _storage;
         private readonly ILogger<GuestbookController> _logger;
 
-        public GuestbookController(ILogger<GuestbookController> logger)
+        public GuestbookController(IGuestbookStorage storage, ILogger<GuestbookController> logger)
         {
+            _storage = storage;
             _logger = logger;
         }
 
         [HttpGet]
-        public GuestbookModel Get()
+        public Task<GuestbookModel> Get()
         {
             _logger.LogInformation("Get: Received request for guestbook");
-            return new GuestbookModel(GuestbookEntries);
+            return _storage.GetGuestbook();
         }
 
         [HttpPost]
         [Route("add")]
-        public ActionResult AddEntry(AddEntryRequest request)
+        public async Task<ActionResult> AddEntry(AddEntryRequest request)
         {
             if (request == null || string.IsNullOrWhiteSpace(request.Message))
             {
@@ -48,14 +45,21 @@ namespace Guestbook.Application.Controllers
 
             _logger.LogInformation($"AddEntry: {request.Message}");
 
+            await _storage.AddEntry(new GuestbookEntry
+            {
+                Message = request.Message,
+                Timestamp = DateTime.UtcNow
+            });
+
             return Ok();
         }
 
         [HttpDelete]
         [Route("clear")]
-        public ActionResult Clear()
+        public async Task<ActionResult> Clear()
         {
             _logger.LogInformation("Clear: Received clear request");
+            await _storage.ClearGuestbook();
             return Ok();
         }
     }

@@ -4,14 +4,8 @@ namespace Guestbook.Application.Models
 {
     public class GuestbookEntry
     {
-        public string Message { get; }
+        public string Message { get; init; }
 
-        public DateTime Timestamp { get; }
-
-        public GuestbookEntry(string message, DateTime timestamp)
-        {
-            Message = message;
-            Timestamp = timestamp;
-        }
+        public DateTime Timestamp { get; init; }
     }
 }
