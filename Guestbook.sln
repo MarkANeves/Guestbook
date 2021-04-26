@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.809.7
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guestbook.App", "Guestbook.App\Guestbook.App.csproj", "{E83077C2-1DD7-4812-ACE0-2E2B307909F6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Guestbook.Application", "Guestbook.Application\Guestbook.Application.csproj", "{E83077C2-1DD7-4812-ACE0-2E2B307909F6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
