@@ -1,0 +1,18 @@
+﻿environment: development
+
+apphost: k8s
+
+label:
+  name: guestbook
+
+container:
+  name: guestbook-api
+  pullPolicy: IfNotPresent
+  image: alexjneves/guestbook-api
+  tag: 0.1.0
+  port: 80
+replicas: 3
+
+service:
+  port: 8888
+  type: ClusterIP
