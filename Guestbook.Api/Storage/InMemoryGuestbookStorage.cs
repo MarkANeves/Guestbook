@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using Guestbook.Api.Models;
 
@@ -6,11 +6,11 @@ namespace Guestbook.Api.Storage
 {
     public class InMemoryGuestbookStorage : IGuestbookStorage
     {
-        private readonly Stack<GuestbookEntry> _entries;
+        private readonly ConcurrentStack<GuestbookEntry> _entries;
 
         public InMemoryGuestbookStorage()
         {
-            _entries = new Stack<GuestbookEntry>();
+            _entries = new ConcurrentStack<GuestbookEntry>();
         }
 
         public Task<GuestbookModel> GetGuestbook()
