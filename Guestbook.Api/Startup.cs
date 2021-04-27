@@ -21,9 +21,19 @@ namespace Guestbook.Api
         {
             services.AddControllers();
 
-            var connectionString = Configuration.GetValue<string>("StorageConnectionString");
-            var storage = RedisGuestbookStorage.Create(connectionString).Result;
-            services.AddSingleton<IGuestbookStorage>(storage);
+            var storageProvider = Configuration.GetValue<string>("StorageProvider");
+
+            if (storageProvider.Equals("Redis", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                var connectionString = Configuration.GetValue<string>("StorageConnectionString");
+                var storage = RedisGuestbookStorage.Create(connectionString).Result;
+
+                services.AddSingleton<IGuestbookStorage>(storage);
+            }
+            else
+            {
+                services.AddSingleton<IGuestbookStorage>(new InMemoryGuestbookStorage());
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
