@@ -14,7 +14,7 @@ variables:
   dockerfilePath: '$(Build.SourcesDirectory)/Guestbook.Api/Dockerfile'
   dockerRegistryServiceConnection: Guestbook Container Registry
   repository: guestbook-api # The image name will be repository:tag
-  tag: '$(Build.Number)'
+  tag: '$(Build.BuildNumber)'
 
 stages:
 - stage: Build
