@@ -1,18 +1,19 @@
-﻿environment: development
-
-apphost: k8s
-
-label:
-  name: guestbook
+﻿label:
+  name: guestbook-api
 
 container:
   name: guestbook-api
   pullPolicy: IfNotPresent
   image: alexjneves/guestbook-api
-  tag: 0.1.0
+  tag: 0.1.2
   port: 80
-replicas: 3
+
+deployment:
+  replicas: 3
 
 service:
-  port: 8888
+  port: 80
   type: ClusterIP
+
+ingress:
+  path: guestbook # App will be available at <cluster_ip>/<path>

@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 namespace Guestbook.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("entries")]
     public class GuestbookController : ControllerBase
     {
         private readonly IGuestbookStorage _storage;
@@ -21,6 +21,7 @@ namespace Guestbook.Api.Controllers
         }
 
         [HttpGet]
+        [Route("")]
         public Task<GuestbookModel> Get()
         {
             _logger.LogInformation("Get: Received request for guestbook");
