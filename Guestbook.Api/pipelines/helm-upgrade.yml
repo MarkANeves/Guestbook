@@ -1,0 +1,42 @@
+﻿parameters:
+- name: imageVer
+  displayName: Image Version
+  type: string
+  default: latest
+
+name: $(Date:yyyyMMdd)$(Rev:.r)
+
+resources:
+- repo: self
+
+variables:
+  # Azure resources
+  #resourceGroup: guestbook
+  #cluster: guestbook-cluster
+  aksServiceConnection: GuestbookCluster
+  # Image variables
+  registry: guestbook.azurecr.io
+  repository: guestbook-api # Need to fully qualify this i.e. guestbook.azurecr.io/guestbook-api
+  tag: ${{ parameters.imageVer }}
+  # Kubernetes/Helm variables
+  namespace: guestbook
+  appName: guestbook-api
+
+- task: HelmInstaller@0
+  displayName: Install Helm
+  inputs:
+    helmVersion: latest
+    installKubectl: false
+
+- task: HelmDeploy@0
+  displayName: Helm upgrade
+  inputs:
+    connectionType: Kubernetes Service Connection
+    kubernetesServiceEndpoint: $(aksServiceConnection)
+    command: upgrade
+    chartType: FilePath
+    chartPath: $(Build.SourcesDirectory)/Guestbook.Api/Chart
+    releaseName: $(appName)
+    install: true
+    namespace: $(namespace)
+    arguments: '--set container.image=$(registry)/$(repository):$(tag)'

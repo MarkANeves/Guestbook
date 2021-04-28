@@ -35,3 +35,4 @@ stages:
         repository: '$(repository)'
         tags: |
           $(tag)
+          latest
