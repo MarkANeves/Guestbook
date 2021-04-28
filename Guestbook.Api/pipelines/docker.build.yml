@@ -2,6 +2,8 @@
 # Build a Docker image
 # https://docs.microsoft.com/azure/devops/pipelines/languages/docker
 
+name: $(Date:yyyyMMdd)$(Rev:.r)
+
 trigger:
 - master
 
@@ -9,10 +11,10 @@ resources:
 - repo: self
 
 variables:
-  tag: '$(Build.SourceVersion)'
   dockerfilePath: '$(Build.SourcesDirectory)/Guestbook.Api/Dockerfile'
   dockerRegistryServiceConnection: Guestbook Container Registry
-  repository: guestbook
+  repository: guestbook-api # The image name will be repository:tag
+  tag: '$(Build.Number)'
 
 stages:
 - stage: Build
