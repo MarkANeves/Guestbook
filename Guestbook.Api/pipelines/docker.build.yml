@@ -9,7 +9,7 @@ resources:
 - repo: self
 
 variables:
-  tag: '$(Build.BuildId)'
+  tag: '$(Build.SourceVersion)'
   dockerfilePath: '$(Build.SourcesDirectory)/Guestbook.Api/Dockerfile'
   dockerRegistryServiceConnection: Guestbook Container Registry
   repository: guestbook
