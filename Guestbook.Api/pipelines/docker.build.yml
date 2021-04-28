@@ -10,7 +10,7 @@ resources:
 
 variables:
   tag: '$(Build.BuildId)'
-  dockerFileDirectory: '$(Build.SourcesDirectory)/Guestbook.Api'
+  dockerfilePath: '$(Build.SourcesDirectory)/Guestbook.Api/Dockerfile'
 
 stages:
 - stage: Build
@@ -25,7 +25,7 @@ stages:
       displayName: Build an image
       inputs:
         command: build
-        dockerfile: '$(dockerFileDirectory)/Dockerfile'
-        buildContext: '$(dockerFileDirectory)'
+        dockerfile: '$(dockerfilePath)'
+        buildContext: '$(Build.SourcesDirectory)'
         tags: |
           $(tag)
