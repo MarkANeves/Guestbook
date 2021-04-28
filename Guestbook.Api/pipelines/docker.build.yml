@@ -12,6 +12,7 @@ variables:
   tag: '$(Build.BuildId)'
   dockerfilePath: '$(Build.SourcesDirectory)/Guestbook.Api/Dockerfile'
   dockerRegistryServiceConnection: Guestbook Container Registry
+  repository: guestbook
 
 stages:
 - stage: Build
@@ -29,5 +30,6 @@ stages:
         dockerfile: '$(dockerfilePath)'
         buildContext: '$(Build.SourcesDirectory)'
         containerRegistry: '$(dockerRegistryServiceConnection)'
+        repository: '$(repository)'
         tags: |
           $(tag)
