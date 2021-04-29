@@ -37,7 +37,7 @@ stages:
     # Overwrite the default image and tag variables
     # We read the chart directly from the repository as the chart isn't currently published
     - task: HelmDeploy@0
-      displayName: Helm upgrade
+      displayName: Deploy to AKS
       inputs:
         connectionType: Kubernetes Service Connection
         kubernetesServiceEndpoint: $(aksServiceConnection)
