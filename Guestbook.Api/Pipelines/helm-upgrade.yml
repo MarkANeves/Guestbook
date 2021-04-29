@@ -10,13 +10,10 @@ resources:
 - repo: self
 
 variables:
-  # Azure resources
-  #resourceGroup: guestbook
-  #cluster: guestbook-cluster
   aksServiceConnection: GuestbookCluster
   # Image variables
   registry: guestbook.azurecr.io
-  repository: guestbook-api # Need to fully qualify this i.e. guestbook.azurecr.io/guestbook-api
+  repository: guestbook-api
   tag: ${{ parameters.imageVer }}
   # Kubernetes/Helm variables
   namespace: guestbook
@@ -35,7 +32,7 @@ steps:
     kubernetesServiceEndpoint: $(aksServiceConnection)
     command: upgrade
     chartType: FilePath
-    chartPath: $(Build.SourcesDirectory)/Guestbook.Api/Chart
+    chartPath: $(Build.SourcesDirectory)/Guestbook.Api/Charts
     releaseName: $(appName)
     install: true
     namespace: $(namespace)

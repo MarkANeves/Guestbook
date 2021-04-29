@@ -7,10 +7,9 @@
 	</PropertyGroup>
 	<PropertyGroup Condition=" '$(RunConfiguration)' == 'Guestbook.Api' " />
 	<ItemGroup>
+		<Folder Include="Controllers\" />
 		<Folder Include="Models\" />
 		<Folder Include="Storage\" />
-		<Folder Include="Chart\" />
-		<Folder Include="Chart\templates\" />
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="StackExchange.Redis" Version="2.2.4" />

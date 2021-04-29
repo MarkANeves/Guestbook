@@ -14,7 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Guestbook.Api\Guestbook.Api.csproj" />
+    <ProjectReference Include="..\Guestbook.Api\Guestbook.Api.csproj">
+      <ReferenceSourceTarget>ProjectReference</ReferenceSourceTarget>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Storage\" />
