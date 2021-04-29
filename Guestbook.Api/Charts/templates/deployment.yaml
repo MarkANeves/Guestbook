@@ -1,4 +1,4 @@
-﻿apiVersion: apps/v1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Release.Name }}-deployment
@@ -15,7 +15,8 @@ spec:
         app: {{ .Values.label.name }}
       annotations:
         # Helm will not trigger a rollout if the deployment definition has not changed
-        # In order to trigger a rollout when the secrets have changed, include the checksum as an annotation
+        # In order to trigger a rollout when the config/secrets have changed, we include the checksums as an annotation
+        configChecksum: {{ include (print $.Chart.Name "/templates/config-map.yaml") . | sha256sum }}
         secretChecksum: {{ include (print $.Chart.Name "/templates/secret.yaml") . | sha256sum }}
     spec:
       containers:
@@ -25,5 +26,7 @@ spec:
           ports:
             - containerPort: {{ .Values.container.port }}
           envFrom:
+            - configMapRef:
+                name: {{ .Release.Name }}-config-map
             - secretRef:
                 name: {{ .Release.Name }}-secret

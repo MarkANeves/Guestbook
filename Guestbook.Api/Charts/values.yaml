@@ -18,5 +18,8 @@ service:
 ingress:
   path: guestbook # App will be available at <cluster_ip>/<path>
 
+config:
+  storageProvider: InMemory
+
 secrets:
   storageConnectionString: SECRET
