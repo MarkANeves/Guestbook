@@ -30,8 +30,8 @@ stages:
     - task: HelmInstaller@0
       displayName: Install Helm
       inputs:
-      helmVersion: latest
-      installKubectl: false
+        helmVersion: latest
+        installKubectl: false
 
     # Run a Helm Upgrade, installing if this is the first deployment
     # Overwrite the default image and tag variables
@@ -39,12 +39,12 @@ stages:
     - task: HelmDeploy@0
       displayName: Helm upgrade
       inputs:
-      connectionType: Kubernetes Service Connection
-      kubernetesServiceEndpoint: $(aksServiceConnection)
-      command: upgrade
-      chartType: FilePath
-      chartPath: $(Build.SourcesDirectory)/Guestbook.Api/Charts
-      releaseName: $(repository)
-      install: true
-      namespace: $(namespace)
-      arguments: '--set container.image=$(registry)/$(repository) --set container.tag=$(tag)'
+        connectionType: Kubernetes Service Connection
+        kubernetesServiceEndpoint: $(aksServiceConnection)
+        command: upgrade
+        chartType: FilePath
+        chartPath: $(Build.SourcesDirectory)/Guestbook.Api/Charts
+        releaseName: $(repository)
+        install: true
+        namespace: $(namespace)
+        arguments: '--set container.image=$(registry)/$(repository) --set container.tag=$(tag)'
