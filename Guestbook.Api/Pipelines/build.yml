@@ -1,6 +1,5 @@
-# Docker
-# Build a Docker image
-# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+# Builds a docker image for the app and pushes it to the ACR (Azure Container Registry)
+# configured by the dockerRegistryServiceConnection
 
 name: $(Date:yyyyMMdd)$(Rev:.r)
 

@@ -1,0 +1,50 @@
+# Deploys the given version of the app to the AKS (Azure Kubernetes Service) cluster
+# configured by the aksServiceConnection. The image is pulled from the specified registry
+
+parameters:
+- name: imageVer
+  displayName: Image Version
+  type: string
+  default: latest
+
+name: $(Date:yyyyMMdd)$(Rev:.r)
+
+resources:
+- repo: self
+
+variables:
+  aksServiceConnection: GuestbookCluster
+  registry: guestbook.azurecr.io
+  repository: guestbook-api
+  tag: ${{ parameters.imageVer }}
+  namespace: guestbook
+
+stages:
+- stage: Deploy
+  displayName: Deploy App
+  jobs:
+  - job: Deploy
+    displayName: Deploy App
+    steps:
+    # Install Helm
+    - task: HelmInstaller@0
+        displayName: Install Helm
+        inputs:
+        helmVersion: latest
+        installKubectl: false
+
+    # Run a Helm Upgrade, installing if this is the first deployment
+    # Overwrite the default image and tag variables
+    # We read the chart directly from the repository as the chart isn't currently published
+    - task: HelmDeploy@0
+        displayName: Helm upgrade
+        inputs:
+        connectionType: Kubernetes Service Connection
+        kubernetesServiceEndpoint: $(aksServiceConnection)
+        command: upgrade
+        chartType: FilePath
+        chartPath: $(Build.SourcesDirectory)/Guestbook.Api/Charts
+        releaseName: $(repository)
+        install: true
+        namespace: $(namespace)
+        arguments: '--set container.image=$(registry)/$(repository) --set container.tag=$(tag)'
