@@ -6,6 +6,13 @@ parameters:
   displayName: Image Version
   type: string
   default: latest
+- name: storageProvider
+  displayName: Storage Provider
+  type: string
+  default: InMemory
+  values:
+  - InMemory
+  - Redis
 
 name: $(Date:yyyyMMdd)$(Rev:.r)
 
@@ -18,6 +25,8 @@ variables:
   repository: guestbook-api
   tag: ${{ parameters.imageVer }}
   namespace: guestbook
+  storageProvider: ${{ parameters.storageProvider }}
+  storageConnectionString: $(StorageConnectionString) # Secret defined in ADO
 
 stages:
 - stage: Deploy
@@ -47,4 +56,4 @@ stages:
         releaseName: $(repository)
         install: true
         namespace: $(namespace)
-        arguments: '--set container.image=$(registry)/$(repository) --set container.tag=$(tag)'
+        arguments: '--set container.image=$(registry)/$(repository) --set container.tag=$(tag) --set config.storageProvider=$(storageProvider) --set secrets.storageConnectionString=$(storageConnectionString)'
