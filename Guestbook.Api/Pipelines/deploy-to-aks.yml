@@ -9,7 +9,7 @@ parameters:
 - name: storageProvider
   displayName: Storage Provider
   type: string
-  default: InMemory
+  default: Redis
   values:
   - InMemory
   - Redis
