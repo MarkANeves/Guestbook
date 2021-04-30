@@ -26,7 +26,7 @@ variables:
   tag: ${{ parameters.imageVer }}
   namespace: guestbook
   storageProvider: ${{ parameters.storageProvider }}
-  storageConnectionString: $(StorageConnectionString) # Secret defined in ADO
+  secretStorageConnectionString: $(StorageConnectionString) # Secret defined in ADO
 
 stages:
 - stage: Deploy
@@ -56,4 +56,4 @@ stages:
         releaseName: $(repository)
         install: true
         namespace: $(namespace)
-        arguments: '--set container.image=$(registry)/$(repository) --set container.tag=$(tag) --set config.storageProvider=$(storageProvider) --set secrets.storageConnectionString=$(storageConnectionString)'
+        arguments: '--set container.image=$(registry)/$(repository) --set container.tag=$(tag) --set config.storageProvider=$(storageProvider) --set secrets.storageConnectionString=$(secretStorageConnectionString)'
