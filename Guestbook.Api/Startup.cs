@@ -1,3 +1,4 @@
+using System;
 using Guestbook.Api.Storage;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,16 +24,21 @@ namespace Guestbook.Api
 
             var storageProvider = Configuration.GetValue<string>("StorageProvider");
 
-            if (storageProvider.Equals("Redis", System.StringComparison.InvariantCultureIgnoreCase))
+            Console.WriteLine("Using storage provider: " + storageProvider);
+
+            if (storageProvider.Equals("Redis", StringComparison.InvariantCultureIgnoreCase))
             {
                 var connectionString = Configuration.GetValue<string>("StorageConnectionString");
                 var storage = RedisGuestbookStorage.Create(connectionString).Result;
 
                 services.AddSingleton<IGuestbookStorage>(storage);
+
+                Console.WriteLine("Connected and registered Redis storage");
             }
             else
             {
                 services.AddSingleton<IGuestbookStorage>(new InMemoryGuestbookStorage());
+                Console.WriteLine("Registered InMemory storage");
             }
         }
 
