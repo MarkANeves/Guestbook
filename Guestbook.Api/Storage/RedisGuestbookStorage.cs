@@ -27,7 +27,7 @@ namespace Guestbook.Api.Storage
 
         public async Task<GuestbookModel> GetGuestbook()
         {
-            var entriesValues = await _database.ListRangeAsync(GuestbookKey, 0, 99);
+            var entriesValues = await _database.ListRangeAsync(GuestbookKey, 0, _capacity - 1);
 
             var entries = entriesValues.Select(DeserializeEntry).ToArray();
 
