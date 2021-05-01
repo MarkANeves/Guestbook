@@ -20,6 +20,7 @@ ingress:
 
 config:
   storageProvider: InMemory
+  guestbookCapacity: 10
 
 secrets:
   storageConnectionString: SECRET

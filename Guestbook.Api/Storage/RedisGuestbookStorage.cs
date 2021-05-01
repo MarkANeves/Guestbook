@@ -11,16 +11,18 @@ namespace Guestbook.Api.Storage
         private const string GuestbookKey = "guestbook";
 
         private readonly IDatabase _database;
+        private readonly uint _capacity;
 
-        public RedisGuestbookStorage(IDatabase database)
+        public RedisGuestbookStorage(IDatabase database, uint capacity)
         {
             _database = database;
+            _capacity = capacity;
         }
 
-        public static async Task<RedisGuestbookStorage> Create(string connectionString)
+        public static async Task<RedisGuestbookStorage> Create(string connectionString, uint capacity)
         {
             var redis = await ConnectionMultiplexer.ConnectAsync(connectionString);
-            return new RedisGuestbookStorage(redis.GetDatabase());
+            return new RedisGuestbookStorage(redis.GetDatabase(), capacity);
         }
 
         public async Task<GuestbookModel> GetGuestbook()
@@ -32,9 +34,18 @@ namespace Guestbook.Api.Storage
             return new GuestbookModel(entries);
         }
 
-        public Task AddEntry(GuestbookEntry entry)
+        public async Task AddEntry(GuestbookEntry entry)
         {
-            return _database.ListLeftPushAsync(GuestbookKey, SerializeEntry(entry));
+            var length = await _database.ListLeftPushAsync(GuestbookKey, SerializeEntry(entry));
+
+            // If we've exceeded the maximum capacity then trim the excess elements.
+            // This solution may temporarily exceed the capacity, but is pragmatic in that it does not require
+            // the complexity of transactions
+            if (length > _capacity)
+            {
+                await _database.ListTrimAsync(GuestbookKey, 0, _capacity - 1);
+            }
+
         }
 
         public Task ClearGuestbook()

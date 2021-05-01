@@ -4,6 +4,6 @@ namespace Guestbook.Api.Test.Storage
 {
     public class InMemoryGuestbookStorageTests : GuestbookStorageTests
     {
-        protected override IGuestbookStorage CreateStorage() => new InMemoryGuestbookStorage();
+        protected override IGuestbookStorage CreateStorage(uint capacity) => new InMemoryGuestbookStorage(capacity);
     }
 }

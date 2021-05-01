@@ -1,4 +1,6 @@
 ﻿using System.Collections.Concurrent;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Guestbook.Api.Models;
 
@@ -6,22 +8,41 @@ namespace Guestbook.Api.Storage
 {
     public class InMemoryGuestbookStorage : IGuestbookStorage
     {
-        private readonly ConcurrentStack<GuestbookEntry> _entries;
+        private readonly uint _capacity;
+        private readonly ConcurrentQueue<GuestbookEntry> _entries;
+        private readonly SemaphoreSlim _addEntrySemaphore;
 
-        public InMemoryGuestbookStorage()
+        public InMemoryGuestbookStorage(uint capacity)
         {
-            _entries = new ConcurrentStack<GuestbookEntry>();
+            _capacity = capacity;
+            _entries = new ConcurrentQueue<GuestbookEntry>();
+            _addEntrySemaphore = new(1, 1);
         }
 
         public Task<GuestbookModel> GetGuestbook()
         {
-            return Task.FromResult(new GuestbookModel(_entries));
+            var orderedEntries = Enumerable.Reverse(_entries).ToArray();
+            return Task.FromResult(new GuestbookModel(orderedEntries));
         }
 
-        public Task AddEntry(GuestbookEntry entry)
+        public async Task AddEntry(GuestbookEntry entry)
         {
-            _entries.Push(entry);
-            return Task.CompletedTask;
+            await _addEntrySemaphore.WaitAsync();
+
+            try
+            {
+                // Dequeue entries until we have capacity for the new entry
+                while (_entries.Count >= _capacity)
+                {
+                    _entries.TryDequeue(out _);
+                }
+
+                _entries.Enqueue(entry);
+            }
+            finally
+            {
+                _addEntrySemaphore.Release();
+            }
         }
 
         public Task ClearGuestbook()

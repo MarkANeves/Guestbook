@@ -13,6 +13,10 @@ parameters:
   values:
   - InMemory
   - Redis
+- name: guestbookCapacity
+  displayName: Guestbook Capacity
+  type: number
+  default: 10
 
 name: $(Date:yyyyMMdd)$(Rev:.r)
 
@@ -21,11 +25,12 @@ resources:
 
 variables:
   aksServiceConnection: GuestbookCluster
+  namespace: guestbook
   registry: guestbook.azurecr.io
   repository: guestbook-api
   tag: ${{ parameters.imageVer }}
-  namespace: guestbook
   storageProvider: ${{ parameters.storageProvider }}
+  guestbookCapacity: ${{ parameters.guestbookCapacity }}
   secretStorageConnectionString: $(StorageConnectionString) # Secret defined in ADO
 
 stages:
@@ -56,4 +61,4 @@ stages:
         releaseName: $(repository)
         install: true
         namespace: $(namespace)
-        arguments: '--set container.image=$(registry)/$(repository) --set container.tag=$(tag) --set config.storageProvider=$(storageProvider) --set secrets.storageConnectionString=$(secretStorageConnectionString)'
+        arguments: '--set container.image=$(registry)/$(repository) --set container.tag=$(tag) --set config.storageProvider=$(storageProvider) --set config.guestbookCapacity=$(guestbookCapacity) --set secrets.storageConnectionString=$(secretStorageConnectionString)'

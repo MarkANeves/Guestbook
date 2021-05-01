@@ -23,13 +23,14 @@ namespace Guestbook.Api
             services.AddControllers();
 
             var storageProvider = Configuration.GetValue<string>("StorageProvider");
+            var guestbookCapacity = Configuration.GetValue<uint>("GuestbookCapacity");
 
-            Console.WriteLine("Using storage provider: " + storageProvider);
+            Console.WriteLine($"Using storage provider {storageProvider} with capacity {guestbookCapacity}");
 
             if (storageProvider.Equals("Redis", StringComparison.InvariantCultureIgnoreCase))
             {
                 var connectionString = Configuration.GetValue<string>("StorageConnectionString");
-                var storage = RedisGuestbookStorage.Create(connectionString).Result;
+                var storage = RedisGuestbookStorage.Create(connectionString, guestbookCapacity).Result;
 
                 services.AddSingleton<IGuestbookStorage>(storage);
 
@@ -37,7 +38,7 @@ namespace Guestbook.Api
             }
             else
             {
-                services.AddSingleton<IGuestbookStorage>(new InMemoryGuestbookStorage());
+                services.AddSingleton<IGuestbookStorage>(new InMemoryGuestbookStorage(guestbookCapacity));
                 Console.WriteLine("Registered InMemory storage");
             }
         }
