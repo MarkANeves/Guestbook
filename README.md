@@ -2,7 +2,7 @@
 
 Guestbook .NET Core Web API.
 
-The application is currently hosted at `http://13.88.112.93/guestbook` running on AKS.
+The application is currently hosted at `http://138.91.72.114/guestbook` running on AKS.
 
 The ADO pipelines can be found at https://dev.azure.com/alexjneves/Guestbook/_build
 
