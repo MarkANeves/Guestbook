@@ -4,8 +4,6 @@ Guestbook .NET Core Web API.
 
 The application is currently hosted at `http://138.91.72.114/guestbook` running on AKS.
 
-The ADO pipelines can be found at https://dev.azure.com/alexjneves/Guestbook/_build
-
 ## Endpoints
 
 `GET /entries`
@@ -25,7 +23,7 @@ Response Body:
 ```
 ---
 
-`POST /entires/add`
+`POST /entries/add`
 
 Add an entry to the guestbook
 
