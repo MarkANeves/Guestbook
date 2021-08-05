@@ -2,12 +2,8 @@ version: '3.4'
 
 services:
   guestbook.api:
-    image: ${DOCKER_REGISTRY-}guestbook
+    image: globoticketclusteracr.azurecr.io/guestbook:1
     build:
       context: .
       dockerfile: Guestbook.Api/Dockerfile
 
-networks:
-  default:
-    external:
-      name: guestbook-net

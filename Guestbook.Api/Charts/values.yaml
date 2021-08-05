@@ -4,12 +4,12 @@
 container:
   name: guestbook-api
   pullPolicy: IfNotPresent
-  image: alexjneves/guestbook-api
-  tag: 0.1.2
+  image: globoticketclusteracr.azurecr.io/guestbook
+  tag: 1
   port: 80
 
 deployment:
-  replicas: 3
+  replicas: 1
 
 service:
   port: 80
@@ -20,7 +20,7 @@ ingress:
 
 config:
   storageProvider: InMemory
-  guestbookCapacity: 10
+  guestbookCapacity: 3
 
 secrets:
   storageConnectionString: SECRET
